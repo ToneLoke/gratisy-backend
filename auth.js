@@ -20,9 +20,9 @@ class Auth {
       res.status(403).send({success: false, message: 'no token provided'})
     }
   }
-  static createToken ({email, lastName}) {
+  static createToken ({username, _id, picUrl}) {
     // "aaaaa.bbbbb.ccccc"
-    return jwt.sign({ email, lastName }, SECRET, { expiresIn: '1h' })
+    return jwt.sign({ username, _id, picUrl}, SECRET, { expiresIn: '1h' })
   }
 }
 

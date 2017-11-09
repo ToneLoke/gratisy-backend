@@ -34,6 +34,7 @@ let userSchema = new Schema({
   username: { type: String, required: true, unique: true, lowercase: true},
   firstName: String,
   lastName: String,
+  picUrl: String,
   password: { type: String, required: true, minlength: 8 },
   favorites: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
   approved: [{ type: Schema.Types.ObjectId, ref: 'Item' }],

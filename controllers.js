@@ -41,6 +41,17 @@ class Controllers {
       }
     })
   }
+  static getUser (req, res) {
+    let { username, id} = req.decoded
+    db.users.findOne({username: username})
+    .exec((err, user) => {
+      if (err) {
+        res.json(err)
+      } else {
+        res.json(user)
+      }
+    })
+  }
 }
 
 module.exports = Controllers
