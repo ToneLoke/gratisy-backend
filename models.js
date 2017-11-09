@@ -12,6 +12,10 @@ let itemSchema = new Schema({
   categories: [String]
 })
 
+itemSchema.post('save', function (doc) {
+
+})
+
 // movieSchema.statics.search = function (query, cb) {
 //   console.log(query)
 //   let searchObj = {}

@@ -4,6 +4,7 @@ const Auth = require('./auth')
 
 ApiRouter.route('/items')
   .get(Controllers.getAllItems)
+  .post(Auth.verifyToken, Controllers.createItem)
 ApiRouter.route('/login')
   .post(Controllers.logIn)
 ApiRouter.route('/signup')

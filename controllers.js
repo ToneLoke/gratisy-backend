@@ -3,7 +3,9 @@ const Auth = require('./auth')
 
 class Controllers {
   static getAllItems (req, res) {
-    db.items.find({}, (err, items) => {
+    db.items.find({})
+    .populate('owner')
+    .exec((err, items) => {
       if (err) {
         res.json(err)
       } else {
@@ -42,13 +44,33 @@ class Controllers {
     })
   }
   static getUser (req, res) {
-    let { username, id} = req.decoded
+    let { username, _id} = req.decoded
     db.users.findOne({username: username})
+    .populate('myItems')
     .exec((err, user) => {
       if (err) {
         res.json(err)
       } else {
         res.json(user)
+      }
+    })
+  }
+  static createItem (req, res) {
+    let newItem = new db.items(req.body)
+    newItem.owner = req.decoded._id
+    newItem.save((err, item) => {
+      if (err) {
+        res.status(403).json(err)
+      } else {
+        db.users.findOneAndUpdate({_id: req.decoded._id}, {myItems: [item]}, {new: true})
+        .populate('myItems')
+        .exec((err, user) => {
+          if (err) {
+            res.status(403).json(err)
+          } else {
+            res.json(user)
+          }
+        })
       }
     })
   }
