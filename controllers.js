@@ -1,4 +1,5 @@
 const db = require('./models')
+const Auth = require('./auth')
 
 class Controllers {
   static getAllItems (req, res) {
@@ -21,8 +22,7 @@ class Controllers {
       } else if (user) {
         let dbResponse = user.verifyPW(password)
         if (dbResponse.valid) {
-          // res.json({...dbResponse, token: Auth.createToken(user)})
-          res.json({...dbResponse, user})
+          res.json({...dbResponse, token: Auth.createToken(user)})
         } else {
           res.json(dbResponse)
         }
